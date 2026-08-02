@@ -4,6 +4,8 @@ import starlight from "@astrojs/starlight";
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://smartonesda.github.io",
+  base: "/typescript-guidebook",
   integrations: [
     starlight({
       title: "TypeScript Guidebook",
@@ -394,5 +396,6 @@ export default defineConfig({
     }),
   ],
 });
+
 
 
