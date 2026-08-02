@@ -1,0 +1,171 @@
+---
+/**
+ * Custom Hero component — SmartOneDev TypeScript Guidebook
+ * Replaces default Astro mascot with SmartOneDev illustration.
+ * Layout mirrors default Starlight Hero grid (7fr / 4fr at ≥50rem).
+ */
+import DraftContentNotice from 'virtual:starlight/components/DraftContentNotice';
+
+// PAGE_TITLE_ID is '_top' — hardcoded to avoid importing unexported constants
+const PAGE_TITLE_ID = '_top';
+
+const { data } = Astro.locals.starlightRoute.entry;
+const { title = data.title, tagline, actions = [] } = data.hero || {};
+---
+
+<div class="hero">
+  <div class="hero-image-wrap">
+    <!-- Dark mode illustration -->
+    <img
+      src="/images/dark-removebg-preview.png"
+      alt="SmartOneDev TypeScript Guidebook"
+      width="480"
+      height="480"
+      loading="lazy"
+      decoding="async"
+      class="hero-image hero-image--dark"
+    />
+    <!-- Light mode illustration -->
+    <img
+      src="/images/light-smartone.png"
+      alt="SmartOneDev TypeScript Guidebook"
+      width="480"
+      height="480"
+      loading="lazy"
+      decoding="async"
+      class="hero-image hero-image--light"
+    />
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-copy">
+      <h1 id={PAGE_TITLE_ID} data-page-title set:html={title} />
+      {data.draft && <DraftContentNotice />}
+      {tagline && <div class="tagline" set:html={tagline} />}
+    </div>
+
+    {actions.length > 0 && (
+      <div class="hero-actions">
+        {actions.map(({ link: href, text, variant }) => (
+          <a
+            href={href}
+            class:list={['hero-btn', variant === 'primary' ? 'btn-primary' : 'btn-secondary']}
+          >
+            {text}
+          </a>
+        ))}
+      </div>
+    )}
+  </div>
+</div>
+
+<style>
+  /* ── Layout — mirrors default Starlight Hero grid ────────────── */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .hero-image-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    order: -1;
+  }
+
+  .hero-image {
+    width: min(70%, 20rem);
+    height: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.5rem, calc(1.5rem + 1vw), 2rem);
+    text-align: center;
+    align-items: center;
+  }
+
+  .hero-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .hero-copy > * { max-width: 50ch; }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* Buttons */
+  .hero-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.625rem 1.375rem;
+    border-radius: 99px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: box-shadow 0.18s ease, transform 0.18s ease, background 0.18s ease,
+                border-color 0.18s ease, color 0.18s ease;
+    font-family: var(--sl-font);
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #ff4d4d, #ff8a3d);
+    color: #fff;
+    border: none;
+    box-shadow: 0 4px 14px rgba(255, 85, 51, 0.35);
+  }
+  .btn-primary:hover {
+    box-shadow: 0 6px 22px rgba(255, 85, 51, 0.52);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--sl-color-white);
+    border: 1px solid var(--sl-color-hairline);
+  }
+  .btn-secondary:hover {
+    border-color: var(--sod-accent, #ff5533);
+    color: var(--sod-accent, #ff5533);
+  }
+
+  /* ── Responsive ────────────────────────────────────────────────── */
+  @media (min-width: 50rem) {
+    .hero {
+      grid-template-columns: 7fr 4fr;
+      gap: 3%;
+      padding-block: clamp(2.5rem, calc(1rem + 10vmin), 10rem);
+    }
+
+    .hero-image-wrap { order: 2; }
+
+    .hero-image { width: min(100%, 25rem); }
+
+    .hero-content {
+      text-align: start;
+      align-items: flex-start;
+    }
+
+    .hero-copy { align-items: flex-start; }
+
+    .hero-actions { justify-content: flex-start; }
+  }
+</style>
+
+
+
