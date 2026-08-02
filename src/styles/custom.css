@@ -95,6 +95,17 @@
 
   /* Glow for active elements */
   --sod-glow: 0 0 16px rgba(255, 85, 51, 0.18);
+
+  /* Search theme-aware styling tokens (Dark) */
+  --sod-search-bg:               #0d1117;
+  --sod-search-hover:            #1f2937;
+  --sod-search-text-title:       #f8fafc;
+  --sod-search-text-excerpt:     #a1a1aa;
+  --sod-search-text-path:        #71717a;
+  --sod-search-mark-bg:          rgba(255, 120, 73, 0.18);
+  --sod-search-mark-text:        #ff7849;
+  --sod-search-shadow:           0 24px 64px rgba(0, 0, 0, 0.5);
+  --sod-search-border:           #30363d;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -144,6 +155,17 @@
   --sod-text-muted: #6b7280;
 
   --sod-glow: 0 0 16px rgba(230, 62, 30, 0.1);
+
+  /* Search theme-aware styling tokens (Light) */
+  --sod-search-bg:               #ffffff;
+  --sod-search-hover:            #fff7f3;
+  --sod-search-text-title:       #222222;
+  --sod-search-text-excerpt:     #555555;
+  --sod-search-text-path:        #888888;
+  --sod-search-mark-bg:          #ffe4d8;
+  --sod-search-mark-text:        #ff5533;
+  --sod-search-shadow:           0 12px 30px rgba(0, 0, 0, 0.08);
+  --sod-search-border:           #ececec;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -453,53 +475,122 @@ a.sl-link-button.sl-link-button--secondary:hover {
 /* ─────────────────────────────────────────────────────────────
   15. SEARCH
    ───────────────────────────────────────────────────────────── */
-/* Search button in header */
+/* Search trigger button in navbar */
 site-search button[data-open-modal] {
   background: var(--sod-surface) !important;
   border: 1px solid var(--sod-border) !important;
   border-radius: var(--sod-radius) !important;
   color: var(--sod-text-muted) !important;
-  transition:
-    border-color var(--sod-transition),
-    color var(--sod-transition) !important;
+  transition: border-color var(--sod-transition), color var(--sod-transition) !important;
 }
 site-search button[data-open-modal]:hover {
   border-color: var(--sod-accent) !important;
   color: var(--sl-color-white) !important;
 }
 
-/* Search dialog */
-dialog#starlight__search {
-  background: var(--sod-card) !important;
-  border: 1px solid var(--sod-border-strong) !important;
+/* Outer dialog container overlay */
+site-search dialog {
+  background: var(--sod-search-bg) !important;
+  border: 1px solid var(--sod-search-border) !important;
   border-radius: var(--sod-radius-xl) !important;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5) !important;
-}
-[data-theme="light"] dialog#starlight__search {
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15) !important;
+  box-shadow: var(--sod-search-shadow) !important;
 }
 
-/* Search input */
-#starlight__search input {
+/* Inner frame layout wrapper */
+site-search .dialog-frame {
+  background: transparent !important;
+}
+
+/* Pagefind UI base scope */
+#starlight__search {
+  --pagefind-ui-background: var(--sod-search-bg) !important;
+  --pagefind-ui-border: var(--sod-search-border) !important;
+  --pagefind-ui-text: var(--sod-search-text-excerpt) !important;
+  --pagefind-ui-primary: var(--sod-accent) !important;
+  --pagefind-ui-font: var(--sl-font) !important;
+  --pagefind-ui-border-radius: var(--sod-radius-lg) !important;
+}
+
+/* Search input field */
+#starlight__search input.pagefind-ui__search-input {
   background: var(--sod-surface) !important;
-  border: 1px solid var(--sod-border) !important;
+  border: 1px solid var(--sod-search-border) !important;
   border-radius: var(--sod-radius) !important;
   color: var(--sod-text) !important;
   font-family: var(--sl-font) !important;
+  transition: border-color var(--sod-transition), box-shadow var(--sod-transition) !important;
 }
-#starlight__search input:focus {
+#starlight__search input.pagefind-ui__search-input:focus {
   border-color: var(--sod-accent) !important;
   outline: none !important;
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--sod-accent) 20%, transparent) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--sod-accent) 15%, transparent) !important;
 }
 
-/* Highlighted match text */
+/* Heading & Excerpt Texts */
+#starlight__search .pagefind-ui__result-link {
+  color: var(--sod-search-text-title) !important;
+}
+#starlight__search .pagefind-ui__result-excerpt {
+  color: var(--sod-search-text-excerpt) !important;
+  font-size: 0.85rem !important;
+}
+
+/* Custom highlighted mark matching text */
 #starlight__search mark {
-  background: color-mix(in srgb, var(--sod-accent) 18%, transparent) !important;
-  color: var(--sod-accent) !important;
-  border-radius: 2px;
+  background: var(--sod-search-mark-bg) !important;
+  color: var(--sod-search-mark-text) !important;
+  border-radius: 2px !important;
+  padding-inline: 0.15em !important;
 }
 
+/* Nested search results list & separators */
+#starlight__search .pagefind-ui__result-nested {
+  border-inline-start-color: var(--sod-search-border) !important;
+}
+#starlight__search .pagefind-ui__result-nested::before {
+  background: var(--sod-search-border) !important;
+}
+
+/* Hover & Active Keyboard Navigation State */
+#starlight__search .pagefind-ui__result-title:not(:where(.pagefind-ui__result-nested *)):hover,
+#starlight__search .pagefind-ui__result-title:not(:where(.pagefind-ui__result-nested *)):focus-within,
+#starlight__search .pagefind-ui__result-nested:hover,
+#starlight__search .pagefind-ui__result-nested:focus-within {
+  background-color: var(--sod-search-hover) !important;
+  outline: 1px solid color-mix(in srgb, var(--sod-accent) 30%, transparent) !important;
+}
+
+/* Result count status message & loader */
+#starlight__search .pagefind-ui__message {
+  color: var(--sod-text-muted) !important;
+  font-size: 0.825rem !important;
+}
+
+/* Close/Cancel button (mobile) */
+site-search button[data-close-modal] {
+  color: var(--sod-text-2) !important;
+  font-family: var(--sl-font) !important;
+  font-weight: 500 !important;
+  transition: color var(--sod-transition) !important;
+}
+site-search button[data-close-modal]:hover {
+  color: var(--sod-accent) !important;
+}
+
+/* Search scrollbar */
+site-search dialog::-webkit-scrollbar {
+  width: 6px;
+}
+site-search dialog::-webkit-scrollbar-track {
+  background: transparent;
+}
+site-search dialog::-webkit-scrollbar-thumb {
+  background: var(--sod-search-border) !important;
+  border-radius: 99px;
+}
+site-search dialog::-webkit-scrollbar-thumb:hover {
+  background: var(--sod-accent) !important;
+}
 /* ─────────────────────────────────────────────────────────────
   16. TABLE OF CONTENTS (right sidebar)
    ───────────────────────────────────────────────────────────── */
@@ -692,3 +783,4 @@ footer.sl-flex {
 [data-theme="light"] a[aria-current="page"].astro-ojxuodky {
   color: white !important;
 }
+

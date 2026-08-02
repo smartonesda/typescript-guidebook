@@ -1,9 +1,13 @@
+const isGithub = process.env.GITHUB_ACTIONS === 'true';
+
 // @ts-check
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 
 // https://astro.build/config
 export default defineConfig({
+  site: isGithub ? "https://smartonesda.github.io" : undefined,
+  base: isGithub ? "/typescript-guidebook/" : "/",
   integrations: [
     starlight({
       title: "TypeScript Guidebook",
@@ -491,3 +495,4 @@ export default defineConfig({
     }),
   ],
 });
+
