@@ -1,171 +1,605 @@
 ---
 /**
- * Custom Hero component — SmartOneDev TypeScript Guidebook
- * Replaces default Astro mascot with SmartOneDev illustration.
- * Layout mirrors default Starlight Hero grid (7fr / 4fr at ≥50rem).
+ * Redesigned Premium Hero component — SmartOneDev TypeScript Guidebook
+ * Inspired by Vercel, Supabase, and Astro docs.
+ * Creates a modern, tech-focused, interactive illustration using HTML & CSS.
+ * Guaranteed to have zero layout duplication or empty spacer blocks.
  */
 import DraftContentNotice from 'virtual:starlight/components/DraftContentNotice';
 
-// PAGE_TITLE_ID is '_top' — hardcoded to avoid importing unexported constants
 const PAGE_TITLE_ID = '_top';
-
 const { data } = Astro.locals.starlightRoute.entry;
 const { title = data.title, tagline, actions = [] } = data.hero || {};
 ---
 
-<div class="hero">
-  <div class="hero-image-wrap">
-    <!-- Dark mode illustration -->
-    <img
-      src="images/dark-removebg-preview.png"
-      alt="SmartOneDev TypeScript Guidebook"
-      width="480"
-      height="480"
-      loading="lazy"
-      decoding="async"
-      class="hero-image hero-image--dark"
-    />
-    <!-- Light mode illustration -->
-    <img
-      src="images/light-smartone.png"
-      alt="SmartOneDev TypeScript Guidebook"
-      width="480"
-      height="480"
-      loading="lazy"
-      decoding="async"
-      class="hero-image hero-image--light"
-    />
-  </div>
+<div class="hero-container">
+  {/* Modern ambient glowing background blobs */}
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+  <div class="hero-noise"></div>
 
-  <div class="hero-content">
-    <div class="hero-copy">
+  <div class="hero-layout">
+    {/* Left Column: Content */}
+    <div class="hero-content">
+      <div class="badge-wrapper">
+        <span class="sod-badge">v0.0.1</span>
+        <span class="badge-divider"></span>
+        <span class="badge-text">TypeScript Guidebook</span>
+      </div>
+      
       <h1 id={PAGE_TITLE_ID} data-page-title set:html={title} />
       {data.draft && <DraftContentNotice />}
-      {tagline && <div class="tagline" set:html={tagline} />}
+      {tagline && <p class="tagline" set:html={tagline} />}
+
+      {actions.length > 0 && (
+        <div class="hero-actions">
+          {actions.map(({ link: href, text, variant }) => (
+            <a
+              href={href}
+              class:list={['hero-btn', variant === 'primary' ? 'btn-primary' : 'btn-secondary']}
+            >
+              {text}
+              {variant === 'primary' && (
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="btn-arrow"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              )}
+            </a>
+          ))}
+        </div>
+      )}
     </div>
 
-    {actions.length > 0 && (
-      <div class="hero-actions">
-        {actions.map(({ link: href, text, variant }) => (
-          <a
-            href={href}
-            class:list={['hero-btn', variant === 'primary' ? 'btn-primary' : 'btn-secondary']}
-          >
-            {text}
-          </a>
-        ))}
+    {/* Right Column: Premium Modern Tech Illustration */}
+    <div class="hero-illustration">
+      <div class="illustration-box">
+        {/* Soft background halo for the entire illustration */}
+        <div class="illustration-halo"></div>
+
+        {/* Glowing grid board */}
+        <div class="tech-grid"></div>
+
+        {/* Floating Code Editor Window */}
+        <div class="float-card window-editor">
+          <div class="window-bar">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="window-title">main.ts</span>
+          </div>
+          <pre class="window-code"><code><span class="code-kw">const</span> <span class="code-var">guidebook</span> = <span class="code-kw">new</span> <span class="code-class">TypeScriptGuide</span>();
+<span class="code-var">guidebook</span>.<span class="code-func">learn</span>({
+  <span class="code-prop">level</span>: <span class="code-str">"SMK RPL"</span>,
+  <span class="code-prop">premium</span>: <span class="code-bool">true</span>
+});</code></pre>
+        </div>
+
+        {/* Floating TypeScript Book/Card */}
+        <div class="float-card ts-card">
+          <div class="ts-logo">TS</div>
+          <div class="ts-meta">
+            <span class="ts-title" style="color: white;">TypeScript</span>
+            <span class="ts-desc">Strict Type Safety</span>
+          </div>
+        </div>
+
+        {/* Floating UI stats badge */}
+        <div class="float-card stats-card">
+          <div class="stats-icon">⚡</div>
+          <div class="stats-data">
+            <span class="stats-val">100%</span>
+            <span class="stats-label">Modern Standard</span>
+          </div>
+        </div>
+
+        {/* SmartOne Dev Central Glowing Orb/Logo representation */}
+        <div class="sod-hub">
+          <div class="hub-ring ring-1"></div>
+          <div class="hub-ring ring-2"></div>
+          <div class="hub-logo">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L2 12H9L7 22L17 12H10L12 2Z" fill="url(#sod-grad)" stroke="url(#sod-grad)" stroke-width="1.5" stroke-linejoin="round"/>
+              <defs>
+                <linearGradient id="sod-grad" x1="2" y1="2" x2="17" y2="22" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#ff4d4d"/>
+                  <stop offset="1" stop-color="#ff8a3d"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+        </div>
+
+        {/* Floating abstract code circle tag */}
+        <div class="float-card code-tag">
+          <code>&lt;RPL /&gt;</code>
+        </div>
       </div>
-    )}
+    </div>
   </div>
 </div>
 
 <style>
-  /* ── Layout — mirrors default Starlight Hero grid ────────────── */
-  .hero {
+  /* ── CSS VARIABLES / ART DIRECTION ────────────────────────────── */
+  :root {
+    --sod-hero-bg:                 transparent;
+    --sod-hero-orb-1:              #ff5533;
+    --sod-hero-orb-2:              #ff8a3d;
+    --sod-hero-orb-opacity:        0.15;
+    --sod-hero-grid:               rgba(255, 255, 255, 0.04);
+    --sod-hero-halo:               rgba(255, 85, 51, 0.12);
+
+    /* Code highlights */
+    --sod-code-kw:                 #ff5533;
+    --sod-code-var:                #f8fafc;
+    --sod-code-class:              #ff8a3d;
+    --sod-code-func:               #60a5fa;
+    --sod-code-prop:               #facc15;
+    --sod-code-str:                #4ade80;
+    --sod-code-bool:               #f43f5e;
+  }
+
+  [data-theme='light'] {
+    /* Premium layered light background: warm white, soft blue/orange glows */
+    --sod-hero-bg:                 radial-gradient(circle at 75% 25%, #FFF5F2 0%, #FFFDFB 50%, #fafafa 100%);
+    --sod-hero-orb-1:              #F7C7B8; /* soft orange */
+    --sod-hero-orb-2:              #EAF4FF; /* very light blue */
+    --sod-hero-orb-opacity:        0.65;
+    --sod-hero-grid:               rgba(255, 90, 54, 0.06);
+    --sod-hero-halo:               rgba(234, 244, 255, 0.85);
+
+    /* Code highlights (GitHub Light inspired) */
+    --sod-code-kw:                 #cf222e;
+    --sod-code-var:                #24292f;
+    --sod-code-class:              #953800;
+    --sod-code-func:               #8250df;
+    --sod-code-prop:               #1b1f23;
+    --sod-code-str:                #0a3069;
+    --sod-code-bool:               #0550ae;
+  }
+
+  /* ── CONTAINER & LAYOUT ────────────────────────────────────────── */
+  .hero-container {
+    position: relative;
+    width: 100%;
+    min-height: clamp(60vh, 75vh, 85vh);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0;
+    overflow: visible;
+    background: var(--sod-hero-bg);
+    border-radius: 0 0 var(--sod-radius-xl) var(--sod-radius-xl);
+  }
+
+  /* Noise texture for depth */
+  .hero-noise {
+    position: absolute;
+    inset: 0;
+    opacity: 0.015;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3联%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    z-index: 2;
+  }
+
+  .hero-layout {
+    width: 100%;
     display: grid;
     grid-template-columns: 1fr;
     align-items: center;
-    gap: 1rem;
-    padding-bottom: 1rem;
+    gap: 3.5rem;
+    position: relative;
+    z-index: 10;
   }
 
-  .hero-image-wrap {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    order: -1;
-  }
-
-  .hero-image {
-    width: min(70%, 20rem);
-    height: auto;
-    object-fit: contain;
-    display: block;
-  }
-
-
+  /* ── LEFT COLUMN: CONTENT ─────────────────────────────────────── */
   .hero-content {
     display: flex;
     flex-direction: column;
-    gap: clamp(1.5rem, calc(1.5rem + 1vw), 2rem);
+    align-items: center;
     text-align: center;
-    align-items: center;
   }
 
-  .hero-copy {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+  /* Premium Badge */
+  .badge-wrapper {
+    display: inline-flex;
     align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 99px;
+    background: rgba(255, 85, 51, 0.06);
+    border: 1px solid rgba(255, 85, 51, 0.15);
+    margin-bottom: 1.5rem;
+  }
+  .sod-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--sod-accent);
+    letter-spacing: 0.05em;
+  }
+  .badge-divider {
+    width: 1px;
+    height: 10px;
+    background: rgba(255, 85, 51, 0.25);
+  }
+  .badge-text {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--sl-color-gray-2);
   }
 
-  .hero-copy > * { max-width: 50ch; }
+  /* Heading & Tagline */
+  .hero-content h1 {
+    font-size: clamp(2.25rem, 6vw, 3.75rem) !important;
+    font-weight: 850 !important;
+    letter-spacing: -0.035em !important;
+    line-height: 1.1 !important;
+    margin-bottom: 1.25rem !important;
+    background: var(--sod-gradient) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+  }
 
-  .hero-actions {
-    display: flex;
-    gap: 1rem 2rem;
-    flex-wrap: wrap;
-    justify-content: center;
+  .tagline {
+    font-size: clamp(1rem, 2vw, 1.125rem) !important;
+    line-height: 1.65 !important;
+    color: var(--sl-color-gray-2) !important;
+    max-width: 44ch;
+    margin-bottom: 2.25rem !important;
   }
 
   /* Buttons */
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    width: 100%;
+  }
+
   .hero-btn {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    padding: 0.625rem 1.375rem;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
     border-radius: 99px;
     font-weight: 600;
     font-size: 0.95rem;
-    text-decoration: none;
-    transition: box-shadow 0.18s ease, transform 0.18s ease, background 0.18s ease,
-                border-color 0.18s ease, color 0.18s ease;
-    font-family: var(--sl-font);
+    text-decoration: none !important;
+    transition: all var(--sod-transition);
   }
 
   .btn-primary {
-    background: linear-gradient(135deg, #ff4d4d, #ff8a3d);
-    color: #fff;
-    border: none;
-    box-shadow: 0 4px 14px rgba(255, 85, 51, 0.35);
+    background: var(--sod-gradient) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 20px rgba(255, 85, 51, 0.25);
   }
   .btn-primary:hover {
-    box-shadow: 0 6px 22px rgba(255, 85, 51, 0.52);
-    transform: translateY(-1px);
+    box-shadow: 0 8px 30px rgba(255, 85, 51, 0.45);
+    transform: translateY(-2px);
+  }
+  .btn-arrow {
+    transition: transform 0.2s ease;
+  }
+  .btn-primary:hover .btn-arrow {
+    transform: translateX(3px);
   }
 
   .btn-secondary {
-    background: transparent;
-    color: var(--sl-color-white);
-    border: 1px solid var(--sl-color-hairline);
+    background: var(--sod-surface) !important;
+    color: var(--sl-color-white) !important;
+    border: 1px solid var(--sod-border) !important;
   }
   .btn-secondary:hover {
-    border-color: var(--sod-accent, #ff5533);
-    color: var(--sod-accent, #ff5533);
+    background: var(--sod-surface-hover) !important;
+    border-color: var(--sod-accent) !important;
+    color: var(--sod-accent) !important;
+    transform: translateY(-1px);
   }
 
-  /* ── Responsive ────────────────────────────────────────────────── */
+  /* ── RIGHT COLUMN: TECHNOLOGY ILLUSTRATION ─────────────────────── */
+  .hero-illustration {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px; /* 3D Depth */
+  }
+
+  .illustration-box {
+    position: relative;
+    width: min(100%, 28rem);
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Soft background halo for the entire illustration (embeds it nicely) */
+  .illustration-halo {
+    position: absolute;
+    width: 22rem;
+    height: 22rem;
+    border-radius: 50%;
+    background: var(--sod-hero-halo);
+    filter: blur(100px);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  /* Tech grid background */
+  .tech-grid {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background-image: radial-gradient(var(--sod-hero-grid) 1.5px, transparent 1.5px);
+    background-size: 16px 16px;
+    mask-image: radial-gradient(circle, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 70%);
+    -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 70%);
+  }
+
+  /* Glow effects */
+  .glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    z-index: 1;
+    opacity: var(--sod-hero-orb-opacity);
+    pointer-events: none;
+    transition: background 0.3s ease, opacity 0.3s ease;
+  }
+  .orb-1 {
+    width: 25rem;
+    height: 25rem;
+    background: var(--sod-hero-orb-1);
+    top: 10%;
+    left: 45%;
+  }
+  .orb-2 {
+    width: 20rem;
+    height: 20rem;
+    background: var(--sod-hero-orb-2);
+    bottom: 10%;
+    right: 45%;
+  }
+
+  /* Floating Card Base */
+  .float-card {
+    position: absolute;
+    background: rgba(17, 17, 20, 0.82);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--sod-radius);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    z-index: 5;
+    transition: transform 0.5s ease-out, background var(--sod-transition),
+                border-color var(--sod-transition), box-shadow var(--sod-transition);
+  }
+
+  [data-theme='light'] .float-card {
+    background: rgba(255, 255, 255, 0.86);
+    border-color: rgba(255, 90, 54, 0.12);
+    box-shadow: 0 10px 30px rgba(255, 90, 54, 0.05), 0 1px 3px rgba(0, 0, 0, 0.02);
+  }
+
+  /* Floating animation */
+  @keyframes float-y {
+    0%, 100% { transform: translateY(0px); }
+    50%      { transform: translateY(-10px); }
+  }
+
+  @keyframes float-y-reverse {
+    0%, 100% { transform: translateY(0px); }
+    50%      { transform: translateY(10px); }
+  }
+
+  /* 1. Code Editor Window */
+  .window-editor {
+    width: 17rem;
+    top: 12%;
+    left: 2%;
+    animation: float-y 6s ease-in-out infinite;
+    font-family: var(--sl-font-mono);
+  }
+
+  .window-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.5rem 0.75rem;
+    background: rgba(0, 0, 0, 0.15);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--sod-radius) var(--sod-radius) 0 0;
+  }
+  [data-theme='light'] .window-bar {
+    background: rgba(0, 0, 0, 0.02);
+    border-bottom-color: rgba(255, 90, 54, 0.06);
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  .dot.red    { background: #ef4444; }
+  .dot.yellow { background: #f59e0b; }
+  .dot.green  { background: #22c55e; }
+  .window-title {
+    margin-left: 0.5rem;
+    font-size: 0.65rem;
+    color: var(--sl-color-gray-3);
+    font-weight: 500;
+  }
+
+  .window-code {
+    margin: 0;
+    padding: 0.85rem 1rem;
+    font-size: 0.72rem;
+    line-height: 1.6;
+    background: transparent;
+    overflow: hidden;
+  }
+
+  /* Code highlights */
+  .code-kw    { color: var(--sod-code-kw); font-weight: 600; }
+  .code-var   { color: var(--sod-code-var); }
+  .code-class { color: var(--sod-code-class); }
+  .code-func  { color: var(--sod-code-func); }
+  .code-prop  { color: var(--sod-code-prop); }
+  .code-str   { color: var(--sod-code-str); }
+  .code-bool  { color: var(--sod-code-bool); }
+
+  /* 2. TypeScript card badge */
+  .ts-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0.9rem;
+    bottom: 22%;
+    left: 4%;
+    animation: float-y-reverse 7s ease-in-out infinite;
+  }
+
+  .ts-logo {
+    width: 2.25rem;
+    height: 2.25rem;
+    background: #3178c6;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.15rem;
+    border-radius: var(--sod-radius-sm);
+    font-family: var(--sl-font-mono);
+  }
+
+  .ts-meta {
+    display: flex;
+    flex-direction: column;
+  }
+  .ts-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--sl-color-white);
+  }
+  .ts-desc {
+    font-size: 0.65rem;
+    color: var(--sl-color-gray-3);
+  }
+
+  /* 3. Stats Badge */
+  .stats-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 0.9rem;
+    top: 25%;
+    right: 4%;
+    animation: float-y 5s ease-in-out infinite;
+  }
+
+  .stats-icon {
+    font-size: 1.1rem;
+  }
+  .stats-data {
+    display: flex;
+    flex-direction: column;
+  }
+  .stats-val {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--sod-accent);
+  }
+  .stats-label {
+    font-size: 0.65rem;
+    color: var(--sl-color-gray-3);
+  }
+
+  /* 4. Central Hub Logo Node */
+  .sod-hub {
+    position: relative;
+    width: 5.5rem;
+    height: 5.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 4;
+  }
+
+  .hub-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px dashed var(--sod-border-strong);
+  }
+  
+  @keyframes rotate-slow {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+  .ring-1 {
+    width: 10rem;
+    height: 10rem;
+    animation: rotate-slow 20s linear infinite;
+  }
+  .ring-2 {
+    width: 14rem;
+    height: 14rem;
+    animation: rotate-slow 32s linear infinite reverse;
+  }
+
+  .hub-logo {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    background: var(--sod-surface);
+    border: 1px solid var(--sod-border-strong);
+    box-shadow: 0 0 24px rgba(255, 85, 51, 0.22);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.9rem;
+    animation: float-y 4s ease-in-out infinite;
+    transition: background var(--sod-transition), border-color var(--sod-transition),
+                box-shadow var(--sod-transition);
+  }
+  [data-theme='light'] .hub-logo {
+    box-shadow: 0 8px 24px rgba(255, 85, 51, 0.12);
+  }
+  
+  .hub-logo svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* 5. Custom Code block pill tag */
+  .code-tag {
+    padding: 0.4rem 0.75rem;
+    bottom: 15%;
+    right: 8%;
+    font-size: 0.7rem;
+    font-family: var(--sl-font-mono);
+    color: var(--sod-accent-2);
+    animation: float-y-reverse 8s ease-in-out infinite;
+  }
+
+  /* ── RESPONSIVE DESIGN (Starlight Standard) ──────────────────── */
   @media (min-width: 50rem) {
-    .hero {
-      grid-template-columns: 7fr 4fr;
-      gap: 3%;
-      padding-block: clamp(2.5rem, calc(1rem + 10vmin), 10rem);
+    .hero-layout {
+      grid-template-columns: 9fr 11fr;
+      gap: 5%;
     }
-
-    .hero-image-wrap { order: 2; }
-
-    .hero-image { width: min(100%, 25rem); }
 
     .hero-content {
-      text-align: start;
       align-items: flex-start;
+      text-align: left;
     }
 
-    .hero-copy { align-items: flex-start; }
+    .hero-actions {
+      justify-content: flex-start;
+    }
 
-    .hero-actions { justify-content: flex-start; }
+    .illustration-box {
+      width: 100%;
+    }
   }
 </style>
-
-
-

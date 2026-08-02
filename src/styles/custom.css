@@ -689,23 +689,6 @@ footer.sl-flex {
   --sod-inline-code-bg: rgba(230, 62, 30, 0.06);
 }
 
-/* ─── Hero image — theme switching ──────────────────────────────────────── */
-/* Dark (default): show dark, hide light */
-.hero-image--light {
-  display: none;
-}
-.hero-image--dark {
-  display: block;
-}
-
-/* Light mode: swap */
-[data-theme="light"] .hero-image--dark {
-  display: none;
-}
-[data-theme="light"] .hero-image--light {
-  display: block;
-}
-
 [data-theme="light"] a[aria-current="page"].astro-ojxuodky {
   color: white !important;
 }
