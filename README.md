@@ -15,7 +15,7 @@ Panduan pembelajaran TypeScript berbahasa Indonesia yang dirancang khusus untuk 
 
 </p>
 
-<img src="./public/images/github-preview.png" alt="TypeScript Guidebook"/>
+<img src="public\images\hero-dark.png" alt="TypeScript Guidebook"/>
 
 </div>
 
