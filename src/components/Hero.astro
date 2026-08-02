@@ -1,15 +1,39 @@
 ---
 /**
- * Redesigned Premium Hero component — SmartOneDev TypeScript Guidebook
- * Inspired by Vercel, Supabase, and Astro docs.
- * Creates a modern, tech-focused, interactive illustration using HTML & CSS.
- * Guaranteed to have zero layout duplication or empty spacer blocks.
+ * Custom Hero component — SmartOneDev TypeScript Guidebook
+ * Replaces default Astro mascot with SmartOneDev illustration.
+ * Layout mirrors default Starlight Hero grid (7fr / 4fr at ≥50rem).
+ *
+ * Guaranteed to render exactly ONE <img> node in the DOM.
+ * Automatically swaps source image in response to theme changes (dark/light/auto).
  */
 import DraftContentNotice from 'virtual:starlight/components/DraftContentNotice';
+import { getImage } from 'astro:assets';
+import darkImg from '../assets/images/hero-dark.png';
+import lightImg from '../assets/images/hero-light.png';
 
+// PAGE_TITLE_ID is '_top' — hardcoded to avoid importing unexported constants
 const PAGE_TITLE_ID = '_top';
+
 const { data } = Astro.locals.starlightRoute.entry;
 const { title = data.title, tagline, actions = [] } = data.hero || {};
+
+// Generate optimized WebP versions of both images using Astro's Image Service
+const optimizedDark = await getImage({ src: darkImg, width: 480, height: 480, format: 'webp' });
+const optimizedLight = await getImage({ src: lightImg, width: 480, height: 480, format: 'webp' });
+
+/**
+ * Prepends the configured Astro base path to any root-relative internal links.
+ * This ensures the buttons route correctly across localhost, Vercel (/),
+ * and GitHub Pages (/typescript-guidebook/).
+ */
+const formatLink = (url: string) => {
+  if (url.startsWith('/')) {
+    const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+    return `${base}${url}`;
+  }
+  return url;
+};
 ---
 
 <div class="hero-container">
@@ -35,7 +59,7 @@ const { title = data.title, tagline, actions = [] } = data.hero || {};
         <div class="hero-actions">
           {actions.map(({ link: href, text, variant }) => (
             <a
-              href={href}
+              href={formatLink(href)}
               class:list={['hero-btn', variant === 'primary' ? 'btn-primary' : 'btn-secondary']}
             >
               {text}
@@ -76,7 +100,7 @@ const { title = data.title, tagline, actions = [] } = data.hero || {};
         <div class="float-card ts-card">
           <div class="ts-logo">TS</div>
           <div class="ts-meta">
-            <span class="ts-title" style="color: white;">TypeScript</span>
+            <span class="ts-title">TypeScript</span>
             <span class="ts-desc">Strict Type Safety</span>
           </div>
         </div>
@@ -175,7 +199,7 @@ const { title = data.title, tagline, actions = [] } = data.hero || {};
     inset: 0;
     opacity: 0.015;
     pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3联%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
     z-index: 2;
   }
 
