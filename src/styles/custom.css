@@ -798,3 +798,9 @@ footer.sl-flex {
 [data-theme="light"] #starlight__search .pagefind-ui__result-nested {
   background-color: transparent !important;
 }
+
+[data-theme="light"] .ts-title:where(.astro-ge2uvauf),
+[data-theme="light"] .ts-desc:where(.astro-ge2uvauf),
+[data-theme="light"] .stats-label:where(.astro-ge2uvauf) {
+  color: white !important;
+}
